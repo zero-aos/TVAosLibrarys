@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+
+def globalConf = rootProject.ext
+
+
+android {
+    compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : 28
+
+    defaultConfig {
+        minSdkVersion rootProject.hasProperty('minSdkVersion') ? rootProject.minSdkVersion : 15
+        targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    Map<String, String> dependencies = globalConf.commonDependencies
+    compileOnly dependencies.reactnative
+}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId globalConf.groupId
+            version globalConf.version
+            artifactId project.name
+            artifact(bundleReleaseAar)
+        }
+    }
+}

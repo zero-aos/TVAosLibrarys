@@ -1,0 +1,4 @@
+com.tenvine.rn.imagepicker
+layout list_item
+style DefaultExplainingPermissionsTheme
+xml provider_paths
